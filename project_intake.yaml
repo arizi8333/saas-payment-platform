@@ -1,0 +1,195 @@
+# ============================================================================
+# PROJECT INFO [WAJIB]
+# ============================================================================
+project:
+  name: "saas-payment-platform"
+  description: "Platform pembayaran SaaS yang menyediakan API key, simulasi payment gateway, dan sistem subscription billing untuk developer."
+  domain: "fintech"
+  version: "0.1.0"
+
+
+# ============================================================================
+# TECH STACK [WAJIB]
+# ============================================================================
+tech_stack:
+  backend:
+    language: go
+    framework: fiber
+    api_style: rest
+
+  frontend:
+    enabled: true
+    framework: nextjs
+    language: typescript
+
+  database:
+    primary: postgresql
+    cache: redis
+
+  infrastructure:
+    container: docker
+    orchestration: docker-compose
+    ci_cd: github-actions
+    cloud_provider: aws
+
+
+# ============================================================================
+# CORE FEATURES [WAJIB]
+# ============================================================================
+core_features:
+
+  - name: user-authentication
+    description: >
+      User (developer) bisa registrasi, login, logout, dan mengelola profil mereka.
+      Sistem menggunakan JWT untuk autentikasi. Admin dapat melihat semua user.
+    priority: high
+
+  - name: api-key-management
+    description: >
+      User dapat membuat dan mengelola API key untuk mengakses layanan platform.
+      Setiap request ke API harus menggunakan API key yang valid.
+      Sistem juga mencatat penggunaan API dan membatasi rate limit per user.
+    priority: high
+
+  - name: payment-gateway-simulator
+    description: >
+      Sistem menyediakan simulasi pembayaran seperti payment gateway.
+      User dapat membuat transaksi, memilih metode pembayaran dummy,
+      dan sistem akan memproses status pembayaran (pending, success, failed).
+    priority: high
+
+  - name: webhook-notification
+    description: >
+      Sistem akan mengirimkan webhook ke endpoint milik user ketika status transaksi berubah.
+      Jika webhook gagal, sistem akan melakukan retry secara otomatis.
+    priority: high
+
+  - name: subscription-billing
+    description: >
+      User dapat membuat produk dan subscription plan (bulanan/tahunan).
+      End user dapat berlangganan dan sistem akan mengelola status subscription,
+      termasuk aktivasi setelah pembayaran berhasil.
+    priority: high
+
+  - name: invoice-management
+    description: >
+      Sistem membuat invoice untuk setiap transaksi atau subscription.
+      User dapat melihat riwayat pembayaran dan status invoice.
+    priority: medium
+
+  - name: rate-limiter
+    description: >
+      Sistem membatasi jumlah request API berdasarkan API key menggunakan Redis.
+      Hal ini untuk mencegah abuse dan menjaga performa sistem.
+    priority: medium
+
+  - name: admin-dashboard
+    description: >
+      Admin dapat melihat statistik sistem seperti jumlah transaksi,
+      user aktif, dan performa webhook melalui dashboard.
+    priority: low
+
+
+# ============================================================================
+# USER ROLES [WAJIB]
+# ============================================================================
+user_roles:
+  - name: admin
+    description: "Memiliki akses penuh ke seluruh sistem termasuk monitoring dan manajemen user"
+
+  - name: developer
+    description: "Pengguna utama yang menggunakan API platform untuk integrasi pembayaran"
+
+  - name: end-user
+    description: "User akhir yang melakukan pembayaran atau berlangganan produk"
+
+
+# ============================================================================
+# AUTHENTICATION [WAJIB jika ada fitur yang butuh login]
+# ============================================================================
+auth:
+  enabled: true
+  strategy: jwt
+  social_login: false
+  two_factor: false
+
+
+# ============================================================================
+# BUSINESS REQUIREMENTS [OPSIONAL]
+# ============================================================================
+business_requirements:
+  expected_users: "10K - 100K"
+  expected_traffic: "medium"
+  data_sensitivity: "high"
+  compliance:
+    - PCI-DSS
+  availability: "99.9%"
+
+
+# ============================================================================
+# DEPLOYMENT [OPSIONAL]
+# ============================================================================
+deployment:
+  strategy: rolling
+  environments:
+    - development
+    - staging
+    - production
+
+
+# ============================================================================
+# ADDITIONAL CONTEXT [OPSIONAL]
+# ============================================================================
+notes: |
+  - Sistem ini terinspirasi dari platform seperti Stripe dan Xendit
+  - Fokus utama adalah backend engineering dan system design
+  - Payment method bersifat simulasi (tidak terhubung ke bank real)
+  - Webhook menjadi bagian penting untuk menunjukkan async processing
+  - Akan digunakan sebagai project portofolio utama
+
+
+# ============================================================================
+# PHASE PLANNING / ROADMAP [OPSIONAL]
+# ============================================================================
+roadmap:
+
+  - phase: 1
+    name: "MVP"
+    description: "Fitur inti minimum agar sistem bisa digunakan developer"
+    target: "2-3 minggu"
+    features:
+      - "User registrasi dan login"
+      - "Generate API key"
+      - "Create transaction"
+      - "Simulate payment (success/failed)"
+      - "Basic invoice creation"
+
+  - phase: 2
+    name: "Enhancement"
+    description: "Menambahkan fitur penting untuk mendekati real-world system"
+    target: "2-3 minggu"
+    features:
+      - "Webhook notification ke user"
+      - "Retry webhook mechanism"
+      - "Subscription plan dan billing"
+      - "API usage tracking"
+
+  - phase: 3
+    name: "Scale & Optimize"
+    description: "Optimasi performa dan reliability sistem"
+    target: "2 minggu"
+    features:
+      - "Rate limiter berbasis Redis"
+      - "Logging dan monitoring"
+      - "Dashboard admin (basic analytics)"
+      - "Dockerization dan CI/CD setup"
+
+  - phase: 4
+    name: "Advanced Features"
+    description: "Fitur tambahan untuk meningkatkan value portofolio"
+    target: "opsional"
+    features:
+      - "Idempotency key untuk transaksi"
+      - "Event-driven processing (queue)"
+      - "Real-time webhook monitoring"
+      - "Audit log system"

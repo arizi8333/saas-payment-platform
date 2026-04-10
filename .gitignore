@@ -1,5 +1,6 @@
 # === Backend (Go) ===
 backend/server
+backend/bin/
 backend/tmp/
 *.exe
 *.exe~
@@ -11,6 +12,7 @@ backend/tmp/
 vendor/
 
 # === Frontend (Node/React/Vue/Next) ===
+node_modules/
 frontend/node_modules/
 frontend/.next/
 frontend/out/
