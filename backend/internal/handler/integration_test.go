@@ -275,7 +275,7 @@ func TestIntegration_TransactionFlow_CreateAndList(t *testing.T) {
 	})
 	createReq := httptest.NewRequest(http.MethodPost, "/api/v1/transactions/", createBody)
 	createReq.Header.Set("Content-Type", "application/json")
-	createReq.Header.Set("X-API-Key", "sk_test_testintegration")
+	createReq.Header.Set("X-API-Key", "test_key_testintegration")
 	createResp, err := app.Test(createReq)
 	if err != nil {
 		t.Fatalf("create transaction request failed: %v", err)
@@ -302,7 +302,7 @@ func TestIntegration_TransactionFlow_CreateAndList(t *testing.T) {
 
 	// Step 2: List transactions and verify the created one appears.
 	listReq := httptest.NewRequest(http.MethodGet, "/api/v1/transactions/?page=1&page_size=10", nil)
-	listReq.Header.Set("X-API-Key", "sk_test_testintegration")
+	listReq.Header.Set("X-API-Key", "test_key_testintegration")
 	listResp, err := app.Test(listReq)
 	if err != nil {
 		t.Fatalf("list transactions request failed: %v", err)
@@ -331,7 +331,7 @@ func TestIntegration_TransactionFlow_CreateAndList(t *testing.T) {
 
 	// Step 3: Get the specific transaction by ID.
 	getReq := httptest.NewRequest(http.MethodGet, "/api/v1/transactions/"+txID.String(), nil)
-	getReq.Header.Set("X-API-Key", "sk_test_testintegration")
+	getReq.Header.Set("X-API-Key", "test_key_testintegration")
 	getResp, err := app.Test(getReq)
 	if err != nil {
 		t.Fatalf("get transaction request failed: %v", err)

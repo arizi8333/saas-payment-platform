@@ -41,7 +41,7 @@ func newTestAPIKey(userID uuid.UUID, role model.UserRole) *model.APIKey {
 		UserID:    userID,
 		Name:      "test-key",
 		KeyHash:   "hash",
-		KeyPrefix: "sk_test_abcd",
+		KeyPrefix: "test_key_abcd",
 		IsActive:  true,
 		RateLimit: 1000,
 		CreatedAt: time.Now(),
@@ -81,7 +81,7 @@ func TestValidateAPIKey_ValidKey_SetsLocalsAndContext(t *testing.T) {
 	})
 
 	req := httptest.NewRequest(http.MethodGet, "/test", nil)
-	req.Header.Set("X-API-Key", "sk_test_testapikey1234")
+	req.Header.Set("X-API-Key", "test_key_testapikey1234")
 
 	resp, err := app.Test(req)
 	if err != nil {
@@ -127,7 +127,7 @@ func TestValidateAPIKey_ValidKey_PropagatesContext(t *testing.T) {
 	})
 
 	req := httptest.NewRequest(http.MethodGet, "/test", nil)
-	req.Header.Set("X-API-Key", "sk_test_testapikey1234")
+	req.Header.Set("X-API-Key", "test_key_testapikey1234")
 
 	resp, _ := app.Test(req)
 	if resp.StatusCode != http.StatusOK {
@@ -178,7 +178,7 @@ func TestValidateAPIKey_InvalidKey_Returns401(t *testing.T) {
 	app.Get("/test", func(c *fiber.Ctx) error { return c.SendStatus(200) })
 
 	req := httptest.NewRequest(http.MethodGet, "/test", nil)
-	req.Header.Set("X-API-Key", "sk_test_invalidkey1234")
+	req.Header.Set("X-API-Key", "test_key_invalidkey1234")
 
 	resp, _ := app.Test(req)
 	if resp.StatusCode != http.StatusUnauthorized {
@@ -203,7 +203,7 @@ func TestValidateAPIKey_InactiveKey_Returns401(t *testing.T) {
 	app.Get("/test", func(c *fiber.Ctx) error { return c.SendStatus(200) })
 
 	req := httptest.NewRequest(http.MethodGet, "/test", nil)
-	req.Header.Set("X-API-Key", "sk_test_inactivekey12")
+	req.Header.Set("X-API-Key", "test_key_inactivekey12")
 
 	resp, _ := app.Test(req)
 	if resp.StatusCode != http.StatusUnauthorized {
@@ -224,7 +224,7 @@ func TestValidateAPIKey_ExpiredKey_Returns401(t *testing.T) {
 	app.Get("/test", func(c *fiber.Ctx) error { return c.SendStatus(200) })
 
 	req := httptest.NewRequest(http.MethodGet, "/test", nil)
-	req.Header.Set("X-API-Key", "sk_test_expiredkey123")
+	req.Header.Set("X-API-Key", "test_key_expiredkey123")
 
 	resp, _ := app.Test(req)
 	if resp.StatusCode != http.StatusUnauthorized {

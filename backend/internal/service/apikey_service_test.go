@@ -176,7 +176,7 @@ func TestListKeys_Success(t *testing.T) {
 			UserID:    userID,
 			Name:      "Key",
 			KeyHash:   uuid.New().String(),
-			KeyPrefix: "sk_test_test",
+			KeyPrefix: "test_key_test",
 			IsActive:  true,
 			RateLimit: 1000,
 			CreatedAt: time.Now(),
@@ -211,7 +211,7 @@ func TestListKeys_Pagination(t *testing.T) {
 			UserID:    userID,
 			Name:      "Key",
 			KeyHash:   uuid.New().String(),
-			KeyPrefix: "sk_test_test",
+			KeyPrefix: "test_key_test",
 			IsActive:  true,
 			RateLimit: 1000,
 			CreatedAt: time.Now(),
@@ -246,7 +246,7 @@ func TestRevokeKey_Success(t *testing.T) {
 		UserID:    userID,
 		Name:      "Revoke Me",
 		KeyHash:   "somehash",
-		KeyPrefix: "sk_test_test",
+		KeyPrefix: "test_key_test",
 		IsActive:  true,
 		RateLimit: 1000,
 		CreatedAt: time.Now(),
@@ -274,7 +274,7 @@ func TestRevokeKey_Forbidden(t *testing.T) {
 		UserID:    ownerID,
 		Name:      "Not Yours",
 		KeyHash:   "somehash",
-		KeyPrefix: "sk_test_test",
+		KeyPrefix: "test_key_test",
 		IsActive:  true,
 		RateLimit: 1000,
 		CreatedAt: time.Now(),
@@ -317,7 +317,7 @@ func TestValidateKey_Success(t *testing.T) {
 	userID := uuid.New()
 	keyID := uuid.New()
 
-	rawKey := "sk_test_abcdef1234567890abcdef1234567890"
+	rawKey := "test_key_abcdef1234567890abcdef1234567890"
 	h := sha256.Sum256([]byte(rawKey))
 	keyHash := hex.EncodeToString(h[:])
 
@@ -349,7 +349,7 @@ func TestValidateKey_Success(t *testing.T) {
 func TestValidateKey_InvalidKey(t *testing.T) {
 	svc, _ := newTestAPIKeyService()
 
-	_, err := svc.ValidateKey(context.Background(), "sk_test_nonexistent000000000000000000")
+	_, err := svc.ValidateKey(context.Background(), "test_key_nonexistent000000000000000000")
 	if err == nil {
 		t.Fatal("expected error for invalid key, got nil")
 	}
@@ -367,7 +367,7 @@ func TestValidateKey_InactiveKey(t *testing.T) {
 	svc, repo := newTestAPIKeyService()
 	keyID := uuid.New()
 
-	rawKey := "sk_test_inactive0000000000000000000000"
+	rawKey := "test_key_inactive0000000000000000000000"
 	h := sha256.Sum256([]byte(rawKey))
 	keyHash := hex.EncodeToString(h[:])
 
@@ -401,7 +401,7 @@ func TestValidateKey_ExpiredKey(t *testing.T) {
 	svc, repo := newTestAPIKeyService()
 	keyID := uuid.New()
 
-	rawKey := "sk_test_expired00000000000000000000000"
+	rawKey := "test_key_expired00000000000000000000000"
 	h := sha256.Sum256([]byte(rawKey))
 	keyHash := hex.EncodeToString(h[:])
 

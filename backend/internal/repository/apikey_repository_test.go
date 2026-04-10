@@ -65,7 +65,7 @@ func newTestAPIKey(userID uuid.UUID) *model.APIKey {
 		UserID:    userID,
 		Name:      "Test Key",
 		KeyHash:   "hash_" + uuid.New().String(),
-		KeyPrefix: "sk_test_abc",
+		KeyPrefix: "test_key_abc",
 		IsActive:  true,
 		RateLimit: 1000,
 		CreatedAt: time.Now(),

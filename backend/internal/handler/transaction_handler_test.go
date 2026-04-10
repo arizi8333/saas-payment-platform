@@ -134,7 +134,7 @@ func TestCreateTransaction_Success_Returns201(t *testing.T) {
 
 	req := httptest.NewRequest(http.MethodPost, "/api/v1/transactions/", body)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-API-Key", "sk_test_testkey123")
+	req.Header.Set("X-API-Key", "test_key_testkey123")
 	resp, err := app.Test(req)
 	if err != nil {
 		t.Fatalf("app.Test: %v", err)
@@ -156,7 +156,7 @@ func TestCreateTransaction_InvalidBody_Returns400(t *testing.T) {
 
 	req := httptest.NewRequest(http.MethodPost, "/api/v1/transactions/", bytes.NewBufferString("not json"))
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-API-Key", "sk_test_testkey123")
+	req.Header.Set("X-API-Key", "test_key_testkey123")
 	resp, _ := app.Test(req)
 
 	if resp.StatusCode != http.StatusBadRequest {
@@ -174,7 +174,7 @@ func TestCreateTransaction_MissingRequiredFields_Returns400(t *testing.T) {
 
 	req := httptest.NewRequest(http.MethodPost, "/api/v1/transactions/", body)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-API-Key", "sk_test_testkey123")
+	req.Header.Set("X-API-Key", "test_key_testkey123")
 	resp, _ := app.Test(req)
 
 	if resp.StatusCode != http.StatusBadRequest {
@@ -224,7 +224,7 @@ func TestCreateTransaction_DuplicateExternalID_Returns409(t *testing.T) {
 
 	req := httptest.NewRequest(http.MethodPost, "/api/v1/transactions/", body)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-API-Key", "sk_test_testkey123")
+	req.Header.Set("X-API-Key", "test_key_testkey123")
 	resp, _ := app.Test(req)
 
 	if resp.StatusCode != http.StatusConflict {
@@ -249,7 +249,7 @@ func TestCreateTransaction_ServiceError_Returns500(t *testing.T) {
 
 	req := httptest.NewRequest(http.MethodPost, "/api/v1/transactions/", body)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-API-Key", "sk_test_testkey123")
+	req.Header.Set("X-API-Key", "test_key_testkey123")
 	resp, _ := app.Test(req)
 
 	if resp.StatusCode != http.StatusInternalServerError {
@@ -288,7 +288,7 @@ func TestListTransactions_Success_Returns200(t *testing.T) {
 	app := setupTransactionTestApp(svc, uid)
 
 	req := httptest.NewRequest(http.MethodGet, "/api/v1/transactions/?page=1&page_size=10", nil)
-	req.Header.Set("X-API-Key", "sk_test_testkey123")
+	req.Header.Set("X-API-Key", "test_key_testkey123")
 	resp, err := app.Test(req)
 	if err != nil {
 		t.Fatalf("app.Test: %v", err)
@@ -326,7 +326,7 @@ func TestListTransactions_DefaultPagination_Returns200(t *testing.T) {
 	app := setupTransactionTestApp(svc, uid)
 
 	req := httptest.NewRequest(http.MethodGet, "/api/v1/transactions/", nil)
-	req.Header.Set("X-API-Key", "sk_test_testkey123")
+	req.Header.Set("X-API-Key", "test_key_testkey123")
 	resp, _ := app.Test(req)
 
 	if resp.StatusCode != http.StatusOK {
@@ -374,7 +374,7 @@ func TestGetTransaction_Success_Returns200(t *testing.T) {
 	app := setupTransactionTestApp(svc, uid)
 
 	req := httptest.NewRequest(http.MethodGet, "/api/v1/transactions/"+txID.String(), nil)
-	req.Header.Set("X-API-Key", "sk_test_testkey123")
+	req.Header.Set("X-API-Key", "test_key_testkey123")
 	resp, err := app.Test(req)
 	if err != nil {
 		t.Fatalf("app.Test: %v", err)
@@ -395,7 +395,7 @@ func TestGetTransaction_InvalidUUID_Returns400(t *testing.T) {
 	app := setupTransactionTestApp(svc, uuid.New())
 
 	req := httptest.NewRequest(http.MethodGet, "/api/v1/transactions/not-a-uuid", nil)
-	req.Header.Set("X-API-Key", "sk_test_testkey123")
+	req.Header.Set("X-API-Key", "test_key_testkey123")
 	resp, _ := app.Test(req)
 
 	if resp.StatusCode != http.StatusBadRequest {
@@ -413,7 +413,7 @@ func TestGetTransaction_NotFound_Returns404(t *testing.T) {
 	app := setupTransactionTestApp(svc, uuid.New())
 
 	req := httptest.NewRequest(http.MethodGet, "/api/v1/transactions/"+uuid.New().String(), nil)
-	req.Header.Set("X-API-Key", "sk_test_testkey123")
+	req.Header.Set("X-API-Key", "test_key_testkey123")
 	resp, _ := app.Test(req)
 
 	if resp.StatusCode != http.StatusNotFound {

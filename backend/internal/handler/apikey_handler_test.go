@@ -94,12 +94,12 @@ func TestCreateKey_Success_Returns201(t *testing.T) {
 				APIKeyResponse: dto.APIKeyResponse{
 					ID:        keyID.String(),
 					Name:      req.Name,
-					KeyPrefix: "sk_test_abcd",
+					KeyPrefix: "test_key_abcd",
 					IsActive:  true,
 					RateLimit: 1000,
 					CreatedAt: time.Now(),
 				},
-				FullKey: "sk_test_abcdef1234567890abcdef1234567890",
+				FullKey: "test_key_abcdef1234567890abcdef1234567890",
 			}, nil
 		},
 	}
@@ -206,7 +206,7 @@ func TestListKeys_Success_Returns200(t *testing.T) {
 					{
 						ID:        uuid.New().String(),
 						Name:      "Key 1",
-						KeyPrefix: "sk_test_abcd",
+						KeyPrefix: "test_key_abcd",
 						IsActive:  true,
 						RateLimit: 1000,
 						CreatedAt: time.Now(),
