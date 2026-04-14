@@ -63,3 +63,8 @@ coverage.html
 
 # === Test Reports (generated — regenerate with make test) ===
 reports/
+
+.kiro/
+kiro/
+templates/
+ai_driven_starter_monorepo_blueprint_go_fe_kiro.md
