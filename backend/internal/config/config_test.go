@@ -11,7 +11,7 @@ func TestLoadDefaults(t *testing.T) {
 		"SERVER_PORT", "SERVER_READ_TIMEOUT", "SERVER_WRITE_TIMEOUT",
 		"DB_HOST", "DB_PORT", "DB_USER", "DB_PASSWORD", "DB_NAME", "DB_SSL_MODE",
 		"DB_MAX_OPEN_CONNS", "DB_MAX_IDLE_CONNS", "DB_MAX_LIFETIME",
-		"REDIS_HOST", "REDIS_PORT", "REDIS_PASSWORD", "REDIS_DB",
+		"REDIS_HOST", "REDIS_PORT", "REDIS_PASSWORD", "REDIS_DB", "REDIS_URL",
 		"JWT_SECRET", "JWT_EXPIRATION_HOURS",
 		"RATE_LIMIT_REQUESTS_PER_HOUR", "RATE_LIMIT_WINDOW_SIZE",
 	}
@@ -128,5 +128,26 @@ func TestRedisAddr(t *testing.T) {
 
 	if got := cfg.Addr(); got != "redis.local:6380" {
 		t.Errorf("expected Addr=redis.local:6380, got %s", got)
+	}
+}
+
+func TestLoadRedisURL(t *testing.T) {
+	os.Setenv("REDIS_URL", "rediss://default:placeholder@test-host.example.io:6379")
+	defer os.Unsetenv("REDIS_URL")
+
+	cfg := Load()
+
+	if cfg.Redis.URL != "rediss://default:placeholder@test-host.example.io:6379" {
+		t.Errorf("expected Redis.URL to be set, got %q", cfg.Redis.URL)
+	}
+}
+
+func TestLoadRedisURLEmpty(t *testing.T) {
+	os.Unsetenv("REDIS_URL")
+
+	cfg := Load()
+
+	if cfg.Redis.URL != "" {
+		t.Errorf("expected Redis.URL to be empty, got %q", cfg.Redis.URL)
 	}
 }

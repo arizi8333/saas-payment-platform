@@ -37,6 +37,7 @@ type DatabaseConfig struct {
 
 // RedisConfig holds Redis connection settings.
 type RedisConfig struct {
+	URL      string // Full Redis URL (e.g. rediss://user:pass@host:port). Takes precedence over individual fields.
 	Host     string
 	Port     string
 	Password string
@@ -75,6 +76,7 @@ func Load() *Config {
 			MaxLifetime:  getDurationEnv("DB_MAX_LIFETIME", 5*time.Minute),
 		},
 		Redis: RedisConfig{
+			URL:      getEnv("REDIS_URL", ""),
 			Host:     getEnv("REDIS_HOST", "localhost"),
 			Port:     getEnv("REDIS_PORT", "6379"),
 			Password: getEnv("REDIS_PASSWORD", ""),
