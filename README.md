@@ -206,6 +206,7 @@ Test stats: 383 tests, 0 failures, 81.1% coverage, zero race conditions.
 - **Audit Logging** — separate structured JSON audit log for security operations
 - **Graceful Shutdown** — SIGTERM/SIGINT, drains in-flight requests and workers
 - **Swagger Docs** — auto-generated OpenAPI at `/swagger/`
+- **Managed Redis Support** — Upstash/managed Redis via REDIS_URL with automatic TLS
 
 ## Infrastructure
 

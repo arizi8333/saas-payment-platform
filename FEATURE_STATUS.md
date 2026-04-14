@@ -52,6 +52,8 @@ Reports location: `reports/testcases/20260414/`
 ## Changelog
 
 ### 2026-04-14
+- Fixed Redis connection for Upstash (TLS/rediss:// support via REDIS_URL)
+- Added REDIS_URL env var support with ParseURL for managed Redis providers
 - Generated comprehensive QA testcases for all 7 features (209 total)
 - Testcase documents in MD + HTML format with color-coded priorities
 - Coverage: API, Security, Database, Performance, Integration test types
