@@ -24,8 +24,6 @@ import (
 	"github.com/saas-payment-platform/backend/internal/repository"
 	"github.com/saas-payment-platform/backend/internal/service"
 	"github.com/saas-payment-platform/backend/internal/worker"
-
-	_ "github.com/saas-payment-platform/backend/docs"
 )
 
 // @title           SaaS Payment Platform API
